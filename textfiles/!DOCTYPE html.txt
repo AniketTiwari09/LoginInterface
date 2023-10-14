@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- This is an SEO Change -->
+    <title>Personal Budget - Manage Finances</title>
+    <!-- This is an SEO Change -->
+    <meta name="description" content="Manage your personal budget efficiently with this free app. Get results by staying alert and staying on track.">
+    <link rel="stylesheet" href="/reset.css">
+    <link rel="stylesheet" href="/main.css">
+</head>
+
+<body>
+
+
+
+    <!-- This is a Semantic HTML Change -->
+    <header>
+        <nav role="navigation" aria-label="Main navigation"></nav>  <!-- This is an A11y Change -->
+            <ul>
+            <li><a href="/">Homepage</a></li>
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/login.html">Login</a></li>
+            <li><a href="https://google.com" aria-label="Visit Google">Google</a></li>  <!-- This is an A11y Change -->
+            </ul>
+        </nav>
+    </header>
+
+
+    <main>
+        <!-- This is a Semantic HTML Change -->
+    <section class="hero">
+        
+        <h1>Personal Budget - Efficient Financial Management </h1> <!-- This is an SEO Change -->
+        <h2>A personal-budget management app</h2>
+    </section>
+
+    <!-- This is a Semantic HTML Change -->
+    <section class="container center">
+
+        <!-- This is a Semantic HTML Change -->
+        <article class="page-area">
+
+            <div class="text-box">
+                <h1>Stay on track</h1>
+                <p>
+                    Do you know where you are spending your money? If you really stop to track it down,
+                    you would get surprised! Proper budget management depends on real data... and this
+                    app will help you with that!
+                </p>
+            </div>
+    
+            <div class="text-box">
+                <h1>Alerts</h1>
+                <p>
+                    What if your clothing budget ended? You will get an alert. The goal is to never go over the budget.
+                </p>
+            </div>
+    
+            <div class="text-box">
+                <h1>Results</h1>
+                <p>
+                    People who stick to a financial plan, budgeting every expense, get out of debt faster!
+                    Also, they to live happier lives... since they expend without guilt or fear... 
+                    because they know it is all good and accounted for.
+                </p>
+            </div>
+    
+            <div class="text-box">
+                <h1>Free</h1>
+                <p>
+                    <canvas id="myChart" width="400" height="400" ></canvas>
+                </p>
+            </div>
+    
+
+        </article>
+
+    </section>
+
+    </main>
+
+    <!-- This is a Semantic HTML Change -->
+    <footer>
+        <nav> <!-- This is an A11y Change -->
+        <div class="center">
+            All rights reserved &copy; Fabio Nolasco
+        </div>
+
+    </nav>
+   </footer>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js" integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js" integrity="sha512-SIMGYRUjwY8+gKg7nn9EItdD8LCADSDfJNutF9TPrvEo86sQmFMh6MyralfIyhADlajSxqc7G0gs7+MwWF/ogQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>   <script>
+    var dataSource = {
+        datasets: [
+            {
+                data: [30, 350, 90],
+                backgroundColor: [
+                    '#ffcd56' ,
+                    '#ff6384' ,
+                    '#36a2eb' ,
+                    '#fd6b19' ,
+
+                ],
+            }
+        ],
+        labels: [
+            'Eat out',
+            'Rent',
+            'Grocery'
+
+        ]
+    };
+
+    function createChart() {
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: dataSource
+        });
+    }
+
+    function getBudget() {
+        axios.get('/budget')
+        .then(function(res) {
+            console.log(res.data);
+            for(var i=0; i<res.data.myBudget.length; i++) {
+                dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
+                dataSource.labels[i] = res.data.myBudget[i].title;
+            }
+            createChart();
+        })
+    }
+    getBudget();
+
+
+   </script>
+</body>
+</html>
